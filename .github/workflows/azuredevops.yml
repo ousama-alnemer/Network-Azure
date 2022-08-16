@@ -1,0 +1,32 @@
+
+resources:
+  repositories:
+  - repository: pipeline-templates
+    type: git
+    name: landingzone-helpers/pipeline-templates
+  
+pool:
+  name: Selfhosted-azure
+  
+jobs:
+- job: 'Deploy'
+  timeoutInMinutes: 0
+  workspace:
+    clean: all
+  steps:
+  - template: 'download-package.yml@pipeline-templates'
+    parameters:
+      solutionName: lz-deployment-script
+      solutionVersion: $(script.version)
+  - template: 'download-package.yml@pipeline-templates'
+    parameters:
+      solutionName: $(solution.name)
+      solutionVersion: $(solution.version)
+  - template: 'run-deployment-script.yml@pipeline-templates'
+    parameters:
+      artifactsStorageAccountName: $(artifactsStorageAccountName)
+      artifactsStorageAccountKey: $(artifactsStorageAccountKey)
+      mpnId: $(mpnId)
+      azApplicationId: $(azApplicationId)
+      azApplicationSecret: $(azApplicationSecret)
+      azRefreshToken: $(azRefreshToken)
