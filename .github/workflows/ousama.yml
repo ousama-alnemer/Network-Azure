@@ -1,0 +1,86 @@
+# This workflow is triggered when a pull request is created for 'main' branch and performs a terraform plan so the 
+# changes and be reviewed and approved before terraform apply workflow is executed for azure resource provisioning.
+# This workflow installs the latest version of Terraform CLI and configures the Terraform CLI configuration file.
+# On pull request events, this workflow will run `terraform init`, `terraform workspace select`, `terraform fmt`, 
+# `terraform validate` and `terraform plan`  
+
+
+name: Terraform Plan
+
+# Controls when the workflow will run
+on:
+  pull_request:
+    branches: [ main ]
+
+  # Allows to run this workflow manually from the Actions tab.
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+ terraform-init:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    name: 'Terraform init'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      AZURE_CREDENTIALS: ${{secrets.AZURE_CREDENTIALS}}
+      DEPLOYMENT_ENV: dev #(options are 'dev','test','prod') 
+ continueOnError: true
+  # This workflow contains a single job called "terraform"
+ 
+  terraform-plan:
+  
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    name: 'Terraform Plan'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      AZURE_CREDENTIALS: ${{secrets.AZURE_CREDENTIALS}}
+      DEPLOYMENT_ENV: dev #(options are 'dev','test','prod') 
+    continueOnError 
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Display the Pipeline activity to be performed
+    - name: Windows VM Terraform Plan
+      run: echo Windows VM Terraform Plan in respective environment
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token.
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+    
+    - name: Login via Az module
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+        enable-AzPSSession: true
+
+    # Initialize Terraform working directory by creating initial files and loading remote state.
+    - name: Terraform Init
+      run: terraform init
+      
+    # Switch the terraform workspace to specific environment, for executing plan on respective state file.
+    - name: Terraform switch to environment (dev, qa, prod) workspace
+      run: terraform workspace select $DEPLOYMENT_ENV
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt
+    
+    # Checks the correctioness of all Terraform files syntax
+    - name: Terraform Validate
+      run: terraform validate
+
+    # Generate the report on what would be deployed using Terraform Plan on respective environment
+    - name: Terraform Plan
+      run: terraform plan -var-file $DEPLOYMENT_ENV/$DEPLOYMENT_ENV.tfvars -out=tfplan
+    
