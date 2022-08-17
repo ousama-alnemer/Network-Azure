@@ -53,6 +53,11 @@ jobs:
 
     # Initialize Terraform working directory by creating initial files and loading remote state.
     - name: Terraform Init
+       env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       run: terraform init
       
     # Switch the terraform workspace to specific environment, for executing plan on respective state file.
