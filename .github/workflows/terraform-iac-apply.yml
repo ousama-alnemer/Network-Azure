@@ -1,6 +1,6 @@
 # This workflow only gets triggered when code is merged in main branch after pull-request is rereview & approval, as part of
 # 'Terraform Plan' workflow.This workflow installs the latest version of Terraform CLI and configures the Terraform CLI 
-# configuration file. On merge events to main branch, this workflow will run `terraform init`, `terraform workspace select`, 
+# configuration file. On merge events to main branch, this workflow will run `terraform init`, `terraform-workspace select`, 
 # and `terraform apply`.
 
 name: Terraform Apply
