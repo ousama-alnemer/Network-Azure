@@ -48,7 +48,7 @@ jobs:
     - name: Login via Az module
       uses: azure/login@v1
       with:
-         AZURE_CREDENTIALS: ${{secrets.AZURE_CREDENTIALS}}
+         creds: ${{secrets.AZURE_CREDENTIALS}}
          enable-AzPSSession: true  
 
     # Initialize Terraform working directory by creating initial files and loading remote state.
