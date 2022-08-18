@@ -36,9 +36,6 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout
       uses: actions/checkout@v3
-   
-          
-
           
     - name: Login via Az module
       uses: azure/login@v1
