@@ -48,11 +48,8 @@ jobs:
     - name: Login via Az module
       uses: azure/login@v1
       with:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        enable-AzPSSession: true
+       creds: ${{secrets.AZURE_CREDENTIALS}}
+       enable-AzPSSession: true  
 
     # Initialize Terraform working directory by creating initial files and loading remote state.
     - name: Terraform Init
