@@ -27,7 +27,7 @@ jobs:
           uses: hashicorp/setup-terraform@v1
           
         - name: Login via Az module
-          uses: azure/login@v1
+       
                 az login -u githubuser -p Gama1618
      
           
