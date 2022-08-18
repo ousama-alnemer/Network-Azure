@@ -14,14 +14,15 @@
         Modified Date: 16 June 2022
 */
 
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "StorageAccount-ResourceGroup"
-    storage_account_name = "abcd31234"
-    container_name       = "tfstate"
+data "terraform_remote_state" "foo" {
+  backend = "azurerm"
+  config = {
+    storage_account_name = "terraform123abc1"
+    container_name       = "terraform-state"
     key                  = "terraform.tfstate"
   }
 }
+
 
 
 # Azure Cloud Provider name
