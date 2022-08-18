@@ -15,6 +15,13 @@
 */
 
 terraform {
+    # Backend setup to maintain Terraform state file
+  backend "azurerm" {
+    resource_group_name  = "rg-terraformstate"
+    storage_account_name = "stwinvm2019year"
+    container_name       = "scwinvm2019year"
+    key                  = "winvm2019year.tfstate"
+  } 
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -23,13 +30,7 @@ terraform {
   }
   required_version = ">= 0.14.9"
 
-  # Backend setup to maintain Terraform state file
-  backend "azurerm" {
-    resource_group_name  = "rg-terraformstate"
-    storage_account_name = "stwinvm2019year"
-    container_name       = "scwinvm2019year"
-    key                  = "winvm2019year.tfstate"
-  }
+ 
 }
 
 # Azure Cloud Provider name
