@@ -52,6 +52,9 @@ jobs:
          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
          subscription-id: ${{ secrets.MVP_SUBSCRIPTION }} 
          enable-AzPSSession: true
+        # Initialize Terraform working directory by creating initial files and loading remote state.
+    - name: Terraform Init
+      run: terraform init     
       
     # Switch the terraform workspace to specific environment, for executing plan on respective state file.
     - name: Terraform switch to environment (dev, qa, prod) workspace
