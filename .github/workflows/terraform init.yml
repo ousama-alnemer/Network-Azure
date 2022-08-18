@@ -50,5 +50,8 @@ jobs:
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
         enable-AzPSSession: true
+    - name:  terraform init
+      run: Terraform init
+        
 
     
