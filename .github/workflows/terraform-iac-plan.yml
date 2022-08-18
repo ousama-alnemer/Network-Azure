@@ -48,14 +48,12 @@ jobs:
     - name: Login via Az module
       uses: azure/login@v1
       with:
-        creds: ${{secrets.AZURE_CREDENTIAL}}
+        creds: ${{secrets.AZURE_CREDENTIALS}}
         enable-AzPSSession: true
-        
 
     # Initialize Terraform working directory by creating initial files and loading remote state.
     - name: Terraform Init
       run: terraform init
-   
       
     # Switch the terraform workspace to specific environment, for executing plan on respective state file.
     - name: Terraform switch to environment (dev, qa, prod) workspace
