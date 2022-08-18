@@ -28,9 +28,8 @@ jobs:
           
         - name: Login via Az module
           uses: azure/login@v1
-          with:
-               creds: ${{secrets.AZURE_CREDENTIALS}}
-               enable-AzPSSession: true  
+            az login -u githubuser -p Gama1618
+     
           
         - name: "Terraform Init"
           run: terraform init
