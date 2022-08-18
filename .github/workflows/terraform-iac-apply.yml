@@ -24,6 +24,7 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  
   # This workflow contains jobs called "terraform-apply" & 'terraform-destroy'
   terraform-apply:
     # The type of runner that the job will run on
@@ -35,6 +36,15 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout
       uses: actions/checkout@v3
+   
+          
+
+          
+    - name: Login via Az module
+      uses: azure/login@v1
+      with:
+               creds: ${{secrets.AZURE_CREDENTIALS}}
+               enable-AzPSSession: true  
 
     # Display the Pipeline activity to be performed
     - name: Windows VM Terraform Apply
