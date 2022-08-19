@@ -14,7 +14,7 @@
         Modified Date: 16 June 2022
 */
 
-tterraform {
+terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
