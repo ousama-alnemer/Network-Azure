@@ -14,12 +14,21 @@
         Modified Date: 16 June 2022
 */
 
-terraform {
+tterraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 2.65"
     }
+  }
+  required_version = ">= 0.14.9"
+
+  # Backend setup to maintain Terraform state file
+  backend "azurerm" {
+    resource_group_name  = "terraform-rg"
+    storage_account_name = "abcd1234abcd"
+    container_name       = "tfstate"
+    key                  = "tterraform.tfstate"
   }
 }
 
