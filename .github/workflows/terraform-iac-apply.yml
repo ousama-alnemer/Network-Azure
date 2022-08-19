@@ -49,7 +49,7 @@ jobs:
 
     # Switch the terraform workspace to specific environment, for executing plan on respective state file.
     - name: Terraform switch to environment (dev, qa, prod) workspace
-      run: terraform workspace new $DEPLOYMENT_ENV
+      run: terraform workspace select $DEPLOYMENT_ENV
 
     # Execute the deployment using Terraform Apply on respective environment
    # - name: Terraform Apply
