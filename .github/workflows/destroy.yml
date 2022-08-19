@@ -1,0 +1,80 @@
+# Execute the resource decommisioning using Terraform Destroy in respective environment
+  # This is to avoid any extra cost incurred during development & testing phase with provisioned resources
+  terraform-destroy:
+    # Execute terraform destroy only for 'dev' environment resources
+ name: Terraform Apply
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push for the main branch
+  push:
+    branches: [ main ]
+  
+  # Allows to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+   ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+   ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+   ARM_SUBSCRIPTION_ID: ${{ secrets.MVP_SUBSCRIPTION }}
+   ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+   DEPLOYMENT_ENV: dev #(options are 'dev','test','prod')  
+ 
+terraform-destroy:
+    # Execute terraform destroy only for 'dev' environment resources
+    runs-on: ubuntu-latest
+    name: 'Terraform Destroy'
+    environment: 'ResourceDestroy'
+    needs: terraform-apply
+    
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Display the Pipeline activity to be performed
+    - name: Windows VM Terraform Destroy
+      run: echo Windows VM Terraform Destroy in respective environment
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token.
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+    
+    # Initialize Terraform working directory by creating initial files and loading remote state.
+    - name: Terraform Init
+      run: terraform init
+
+    # Switch the terraform workspace to specific environment, for executing plan on respective state file.
+    - name: Terraform switch to environment (dev, qa, prod) workspace
+      run: terraform workspace select $DEPLOYMENT_ENV
+
+    - name: Terraform Destroy (ONLY during development) 
+    
+    runs-on: ubuntu-latest
+    name: 'Terraform Destroy'
+    environment: 'ResourceDestroy'
+    needs: terraform-apply
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Display the Pipeline activity to be performed
+    - name: Windows VM Terraform Destroy
+      run: echo Windows VM Terraform Destroy in respective environment
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token.
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+    
+    # Initialize Terraform working directory by creating initial files and loading remote state.
+    - name: Terraform Init
+      run: terraform init
+
+    # Switch the terraform workspace to specific environment, for executing plan on respective state file.
+    - name: Terraform switch to environment (dev, qa, prod) workspace
+      run: terraform workspace select $DEPLOYMENT_ENV
+
+    - name: Terraform Destroy (ONLY during development)
+      run: terraform destroy -auto-approve
