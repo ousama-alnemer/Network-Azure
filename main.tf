@@ -28,7 +28,7 @@ tterraform {
     resource_group_name  = "terraform-rg"
     storage_account_name = "abcd1234abcd"
     container_name       = "tfstate"
-    key                  = "tterraform.tfstate"
+    key                  = "winterraform.tfstate"
   }
 }
 
