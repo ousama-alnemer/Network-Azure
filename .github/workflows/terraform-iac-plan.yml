@@ -45,8 +45,8 @@ jobs:
       uses: hashicorp/setup-terraform@v1
     
     # Initialize Terraform working directory by creating initial files and loading remote state.
-    - name: Terraform Init -reconfigure            
-      run: terraform init -reconfigure 
+    - name: Terraform Init -migrate-state           
+      run: terraform init -migrate-state
       
     # Switch the terraform workspace to specific environment, for executing plan on respective state file.
     - name: Terraform switch to environment (dev, qa, prod) workspace
