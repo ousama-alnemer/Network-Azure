@@ -83,8 +83,8 @@ jobs:
    #   run: terraform init
 
     # Switch the terraform workspace to specific environment, for executing plan on respective state file.
-    - name: Terraform switch to environment (dev, qa, prod) workspace
-      run: terraform workspace select $DEPLOYMENT_ENV
+   # - name: Terraform switch to environment (dev, qa, prod) workspace
+    #  run: terraform workspace select $DEPLOYMENT_ENV
 
     - name: Terraform Destroy (ONLY during development)
       run: terraform destroy -auto-approve
