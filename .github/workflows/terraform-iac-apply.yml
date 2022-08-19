@@ -50,7 +50,7 @@ jobs:
 
     # Execute the deployment using Terraform Apply on respective environment
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var-file $DEPLOYMENT_ENV/$DEPLOYMENT_ENV.tfvars
+      run: terraform apply "tfplan" -auto-approve -var-file $DEPLOYMENT_ENV/$DEPLOYMENT_ENV.tfvars
   
   # Execute the resource decommisioning using Terraform Destroy in respective environment
   # This is to avoid any extra cost incurred during development & testing phase with provisioned resources
