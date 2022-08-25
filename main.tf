@@ -72,6 +72,7 @@ module "subnet" {
 
 # Call Network Interface modulemodule "networkinterface" {
   source = "./modules/network-interface"
+}      
 
   networkinterfacename = "${var.networkinterfacename}-${var.applicationname}-${var.environment}-${var.locationacronym}-${var.increment}"
   subnetid             = module.subnet._subnetid
