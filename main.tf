@@ -1,11 +1,11 @@
 /*
     .SYNOPSIS
-        Configure the Azure provider, Provider version and Terraform backend setup for Windows Virtual Machine 2019 provisioning.
+        Configure the Azure provider, Provider version and Terraform backend setup for Vnet/subnet provisioning.
     .DESCRIPTION
         This is the main file which performs below:
         a.) Defines the cloud resource provider
         b.) Terraform backend setup
-        c.) Code to call modules for provisioning Windows Virtual Machine 2019 Datacenter
+        c.) Code to call modules for provisioning Vnet/subnet
     .NOTES
         Version: 0.1
         Created By: Ousama alnemer
@@ -70,18 +70,7 @@ module "subnet" {
   resourcegroupname  = module.resourcegroup._resourcegroupname
 }
 
-# Call Public IP module
-module "publicip" {
-  source = "./modules/public-ip"
-
-  publicipname      = "${var.publicipname}-${var.applicationname}-${var.environment}-${var.locationacronym}-${var.increment}"
-  location          = module.resourcegroup._resourcegrouplocation
-  resourcegroupname = module.resourcegroup._resourcegroupname
-  environment       = var.environment
-}
-
-# Call Network Interface module
-module "networkinterface" {
+# Call Network Interface modulemodule "networkinterface" {
   source = "./modules/network-interface"
 
   networkinterfacename = "${var.networkinterfacename}-${var.applicationname}-${var.environment}-${var.locationacronym}-${var.increment}"
@@ -109,23 +98,3 @@ module "associatenicnsg" {
   nsgid              = module.networksecuritygroup._networksecuritygroupid
 }
 
-# Call Windows Virtual Machine module
-module "virtualmachine-windows" {
-  source = "./modules/vm-windows"
-
-  vmname                     = "${var.vmname}${var.applicationname}${var.environment}${var.locationacronym}${var.increment}"
-  location                   = module.resourcegroup._resourcegrouplocation
-  resourcegroupname          = module.resourcegroup._resourcegroupname
-  networkinterfacename       = var.networkinterfacename
-  networkinterfaceid         = module.networkinterface._networkinterfaceid
-  vmsize                     = var.vmsize
-  vmadminusername            = var.vmadminusername
-  vmadminuserpassword        = var.vmadminuserpassword
-  vmimagepublisher           = var.vmimagepublisher
-  vmimageoffer               = var.vmimageoffer
-  vmimagesku                 = var.vmimagesku
-  vmimageversion             = var.vmimageversion
-  vmosdiskcaching            = var.vmosdiskcaching
-  vmosdiskstorageaccounttype = var.vmosdiskstorageaccounttype
-
-}
