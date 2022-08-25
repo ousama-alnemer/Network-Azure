@@ -22,7 +22,6 @@ terraform {
     }
   }
   required_version = ">= 0.14.9"
-
   # Backend setup to maintain Terraform state file
   backend "azurerm" {
     resource_group_name  = "terraform-rg"
@@ -49,16 +48,6 @@ module "resourcegroup" {
   location          = var.location
 }
 
-# Call Virtual Network module
-module "virtualnetwork" {
-  source = "./modules/virtual-network"
-
-  vnetname          = "${var.vnetname}-${var.applicationname}-${var.environment}-${var.locationacronym}-${var.increment}"
-  vnetaddressspace  = var.vnetaddressspace
-  location          = module.resourcegroup._resourcegrouplocation
-  resourcegroupname = module.resourcegroup._resourcegroupname
-}
-
 # Call Subnet module
 module "subnet" {
   source = "./modules/subnet"
@@ -72,8 +61,6 @@ module "subnet" {
 
 # Call Network Interface modulemodule "networkinterface" {
   source = "./modules/network-interface"
-}      
-
   networkinterfacename = "${var.networkinterfacename}-${var.applicationname}-${var.environment}-${var.locationacronym}-${var.increment}"
   subnetid             = module.subnet._subnetid
   location             = module.resourcegroup._resourcegrouplocation
