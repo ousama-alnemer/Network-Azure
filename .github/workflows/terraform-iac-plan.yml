@@ -42,11 +42,7 @@ jobs:
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token.
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-    
-    # Initialize Terraform working directory by creating initial files and loading remote state.
-    - name: Terraform Init            
-      run: terraform init 
+      uses: hashicorp/setup-terraform@v1   
       
     # Switch the terraform workspace to specific environment, for executing plan on respective state file.
     - name: Terraform switch to environment (dev, qa, prod) workspace
@@ -55,6 +51,9 @@ jobs:
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt
+     # Initialize Terraform working directory by creating initial files and loading remote state.
+    - name: Terraform Init            
+      run: terraform init   
     
     # Checks the correctioness of all Terraform files syntax
     - name: Terraform Validate
