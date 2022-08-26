@@ -161,4 +161,7 @@ variable "publicipid" {
 
 variable “node_count” {
 type = number
+ description = "The number of servers." 
 }
+
+
