@@ -15,6 +15,7 @@
 
 resource "azurerm_public_ip" "publicip" {
   name                = var.publicipname
+  count               = var.vm_count  
   location            = var.location
   resource_group_name = var.resourcegroupname
   allocation_method   = "Static"
