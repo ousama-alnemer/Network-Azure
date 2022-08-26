@@ -30,3 +30,4 @@ nsgname                       = "nsg"
 nsgid                         = "nsgid"
 publicipname                  = "pip"
 publicipid                    = "pipid"
+vm_count                      = 2
