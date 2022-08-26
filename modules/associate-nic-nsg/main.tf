@@ -16,5 +16,6 @@
 resource "azurerm_network_interface_security_group_association" "associate-nic-nsg" {
   network_interface_id      = var.networkinterfaceid
   network_security_group_id = var.nsgid
+  count                     = var.vm_count  
 }
 
