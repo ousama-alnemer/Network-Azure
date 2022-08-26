@@ -123,5 +123,5 @@ module "virtualmachine-windows" {
   vmimageversion             = var.vmimageversion
   vmosdiskcaching            = var.vmosdiskcaching
   vmosdiskstorageaccounttype = var.vmosdiskstorageaccounttype
-  count                      = var.count
+  countnr                    = var.count
 }
