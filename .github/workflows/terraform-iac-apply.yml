@@ -42,6 +42,9 @@ jobs:
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token.
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
+    - uses: Azure/login@v1
+      with:
+       creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
     
     # Initialize Terraform working directory by creating initial files and loading remote state.
     - name: Terraform Init
