@@ -159,7 +159,7 @@ variable "publicipid" {
   description = "The id of the public ip address."
 }
 
-variable "countnr" {
+variable "vm_count" {
 type = number
  description = "The number of servers." 
 }
